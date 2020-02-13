@@ -1,0 +1,28 @@
+<div class="col-md-6 employee-container">
+  <h2 class="mb-3"> Employee Details</h2>
+  <button class="btn btn-primary btn-block"  (click)="addEmployee()"> Add Employee</button>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th class="hidden">Id</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Salary</th>                                                                           
+      <th>image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let Employee of employees">
+      <td class="hidden">{{employee.id}}</td>
+      <td>{{employee.employee_name}}</td>
+      <td>{{employee.employee_age}}</td>
+      <td>{{employee.employee_salary}}</td>
+      <td>{{employee.employee_image}}</td>
+      <td>
+        <button class="btn btn-success" (click)="editEmployee(employee)" style="margin-left: 20px;"> Edit</button>
+        <button class="btn btn-danger" (click)="deleteEmployee(employee)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
