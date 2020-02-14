@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 
-import {Employee} from "../model/employee";
-import {EmployeeService} from "../service/employee.service";
+import {Employee} from "./../../model/employee";
+import { LoginModel } from './../../model/login.model';
+
+import { AuthService } from './../../service/auth-service.service';
+import {EmployeeService} from "./../../service/employee.service";
 
 
 @Component({
@@ -17,7 +20,8 @@ export class LoginComponent implements OnInit {
   isSubmitted  =  false;
 
   constructor(private formBuilder: FormBuilder, 
-  	          private router: Router, 
+              private router: Router, 
+              private AuthService :AuthService,
   	          private  employeeService: EmployeeService) { }
 
   ngOnInit() {
@@ -32,12 +36,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm.value);
+    var model  =<LoginModel> this.loginForm.value  ;
     this.isSubmitted = true;
     if(this.loginForm.invalid){
       return;
     }
-    this.employeeService.login(this.loginForm.value);
-    this.router.navigate(['list-employee']);
+    this.AuthService.setUserToken(model);
+    this.AuthService.setUserName(model.username);
+    this.router.navigate(['/list-employee']);
   }
 
 }

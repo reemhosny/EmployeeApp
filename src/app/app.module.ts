@@ -1,28 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule} from '@angular/common/http'; 
-
+import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'; 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { AddEmployeeComponent } from './employee/add-employee/add-employee.component';
-import { ListEmployeeComponent } from './employee/list-employee/list-employee.component';
-import { EditEmployeeComponent } from './employee/edit-employee/edit-employee.component';
+import { ReactiveFormsModule} from "@angular/forms";
 
-import {ReactiveFormsModule} from "@angular/forms";
+
+import { AppComponent } from './app.component';
+import { NavComponent } from './components/nav/nav.component';
+import { AboutComponent } from './components/about/about.component';
+import { AddEmployeeComponent } from './components/employee/add-employee/add-employee.component';
+import { EditEmployeeComponent } from './components/employee/edit-employee/edit-employee.component';
+import { ListEmployeeComponent } from './components/employee/list-employee/list-employee.component';
+import { LoginComponent } from './components/login/login.component';
+
+
 import {EmployeeService} from "./service/employee.service";
-import { AboutComponent } from './about/about.component';
-import { NavComponent } from './nav/nav.component';
+import { TokenInterceptor } from './helpers/token.interceptor';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    AddEmployeeComponent,
-    ListEmployeeComponent,
-    EditEmployeeComponent,
-    AboutComponent,
     NavComponent,
+    AboutComponent,
+    AddEmployeeComponent,
+    EditEmployeeComponent,
+    ListEmployeeComponent,
+    LoginComponent,
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,15 @@ import { NavComponent } from './nav/nav.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [EmployeeService],
-  bootstrap: [AppComponent]
+  providers: [EmployeeService , 
+    TokenInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    }
+  ],
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

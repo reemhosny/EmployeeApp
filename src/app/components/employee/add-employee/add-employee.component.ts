@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from "rxjs";
+import { Router } from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
 
-import {EmployeeService} from "../../service/employee.service";                                              
+
+import {EmployeeService} from "../../../service/employee.service";
+import {Employee,EmployeeOutput} from "../../../model/employee";
 
 @Component({
-  selector: 'app-add-employee',                                             
+  selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css']
 })
 export class AddEmployeeComponent implements OnInit {
-
 
   addForm: FormGroup;
 
@@ -35,6 +37,6 @@ export class AddEmployeeComponent implements OnInit {
       .subscribe( data => {
         this.router.navigate(['list-employee']);
       });
-  }                                                            
+  }       
 
 }

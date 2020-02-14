@@ -18,7 +18,6 @@
         	routerLinkActive="active">Sign In</a>
     </li>-->
 
-
-    <button *ngIf="employeeService.isLoggedIn()" (click)="employeeService.logout()">Logout</button>                                                                                   
+    <button *ngIf="authService.isLoggedIn()" (click)="authService.logout()" class="btn-primary">  Logout</button>                                                                                   
 </div>
   </nav>

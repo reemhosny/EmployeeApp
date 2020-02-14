@@ -1,0 +1,35 @@
+<div class="col-md-12 employee-container">
+  <div class="alert alert-danger"  *ngIf="showError">
+    <strong>Danger!</strong>{{message}}
+  </div>
+
+  <h2 class="mb-3"> Employee Details</h2>
+ 
+  <button class="btn btn-primary btn-block" (click)="addEmployee()"> Add Employee</button>
+  
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="hidden">Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Salary</th>
+        <th>image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of employees">
+        <td class="hidden">{{emp.id}}</td>
+        <td>{{emp.employee_name}}</td>
+        <td>{{emp.employee_age}}</td>
+        <td>{{emp.employee_salary}}</td>
+        <td>{{emp.employee_image}}</td>
+        <td>
+          <button class="btn btn-success" (click)="editEmployee(emp.id)"> Edit</button>
+          <button class="btn btn-danger" (click)="deleteEmployee(emp.id)" style="margin-left: 12px;">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
