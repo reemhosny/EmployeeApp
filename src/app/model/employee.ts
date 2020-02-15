@@ -1,7 +1,6 @@
 export class EmployeeOutput<T> {
-	status?: string;
+	status: string;
 	data: T;
-	password: string
 }
 
 export class Employee {

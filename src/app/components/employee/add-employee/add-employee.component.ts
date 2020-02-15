@@ -15,10 +15,13 @@ import {Employee,EmployeeOutput} from "../../../model/employee";
 export class AddEmployeeComponent implements OnInit {
 
   addForm: FormGroup;
-
+  employees:Employee[];
   constructor(private formBuilder: FormBuilder,
   			  private router: Router, 
-  			  private employeeService: EmployeeService) { }
+  			  private employeeService: EmployeeService) {
+            this.employees = JSON.parse(localStorage.getItem("Employees"));
+    
+           }
 
 
 
@@ -26,15 +29,18 @@ export class AddEmployeeComponent implements OnInit {
   	this.addForm = this.formBuilder.group({
       id: [],
       employee_name: ['', Validators.required],
-      password: ['', Validators.required],
       employee_age: ['', Validators.required],
       employee_salary: ['', Validators.required]
     });
   }
 
   onSubmit() {
-    this.employeeService.createEmployee(this.addForm.value)
-      .subscribe( data => {
+    var model  = <Employee>this.addForm.value;
+    this.employeeService.createEmployee(model)
+      .subscribe( result=> {
+        model.id  = result.data.id;
+        this.employees.push(model) ;
+        localStorage.setItem("Employees" , JSON.stringify(this.employees));
         this.router.navigate(['list-employee']);
       });
   }       

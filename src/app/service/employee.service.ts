@@ -1,7 +1,7 @@
 import { EmployeeOutput, DeleteOutput } from './../model/employee';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 
 import { Employee } from "../model/employee";
@@ -13,31 +13,38 @@ export class EmployeeService {
 
 
   ApiUrl = "http://dummy.restapiexample.com/api/v1/employees";
-  //deleteUrl = "http://dummy.restapiexample.com/api/v1/delete/";
-  //createUrl = "http://dummy.restapiexample.com/api/v1/create";
-  //updateUrl = "	http://dummy.restapiexample.com/api/v1/update/";
-  //getUrl = "	http://dummy.restapiexample.com/api/v1/employee/";
+  deleteUrl = "http://dummy.restapiexample.com/api/v1/delete/";
+  createUrl = "http://dummy.restapiexample.com/api/v1/create";
+  updateUrl = "http://dummy.restapiexample.com/api/v1/update/";
+  getUrl = "http://dummy.restapiexample.com/api/v1/employee/";
 
   constructor(private httpclient: HttpClient) { }
+
+  private employee = new BehaviorSubject<Employee>(new Employee());
+  currentEmployee = this.employee.asObservable();
+
+  ChangeEmployee(Message) {
+    this.employee.next(Message);
+  }
 
    getEmployees(): Observable<EmployeeOutput<Employee[]>> {
     return this.httpclient.get<EmployeeOutput<Employee[]>>(this.ApiUrl);
   }
 
-  getEmployeeById(id: number): Observable<Employee> {
-    return this.httpclient.get<Employee>(this.ApiUrl + id);
+  getEmployeeById(id): Observable<EmployeeOutput<Employee>> {
+    return this.httpclient.get<EmployeeOutput<Employee>>(this.getUrl + id);
   }
 
-  createEmployee(employee: Employee): Observable<Employee> {
-    return this.httpclient.post<Employee>(this.ApiUrl, employee);
+  createEmployee(employee: Employee): Observable<EmployeeOutput< Employee>> {
+    return this.httpclient.post<EmployeeOutput<Employee>>(this.createUrl, employee);
   }
 
-  updateEmployee(employee: Employee): Observable<Employee> {
-    return this.httpclient.put<Employee>(this.ApiUrl + employee.id, employee);
+  updateEmployee(employee: Employee): Observable<EmployeeOutput< Employee>> {
+    return this.httpclient.put<EmployeeOutput< Employee>>(this.updateUrl + employee.id, employee);
   }
 
-  deleteEmployee(id: number): Observable<Employee> {
-    return this.httpclient.delete<Employee>(this.ApiUrl + id);
+  deleteEmployee(id: number): Observable<DeleteOutput> {
+    return this.httpclient.delete<DeleteOutput>(this.deleteUrl + id , {});
   }
 
 

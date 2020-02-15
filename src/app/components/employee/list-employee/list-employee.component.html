@@ -3,6 +3,11 @@
     <strong>Danger!</strong>{{message}}
   </div>
 
+  <div class="alert alert-success"  *ngIf="showSucces">
+    <strong>Success!</strong>Employee Deleted successfully
+  </div>
+
+
   <h2 class="mb-3"> Employee Details</h2>
  
   <button class="btn btn-primary btn-block" (click)="addEmployee()"> Add Employee</button>
@@ -11,7 +16,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th class="hidden">Id</th>
+        <th >Id</th>
         <th>Name</th>
         <th>Age</th>
         <th>Salary</th>
@@ -20,13 +25,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let emp of employees">
-        <td class="hidden">{{emp.id}}</td>
+        <td >{{emp.id}}</td>
         <td>{{emp.employee_name}}</td>
         <td>{{emp.employee_age}}</td>
         <td>{{emp.employee_salary}}</td>
         <td>{{emp.employee_image}}</td>
         <td>
-          <button class="btn btn-success" (click)="editEmployee(emp.id)"> Edit</button>
+          <button class="btn btn-success" (click)="editEmployee(emp)"> Edit</button>
           <button class="btn btn-danger" (click)="deleteEmployee(emp.id)" style="margin-left: 12px;">Delete</button>
         </td>
       </tr>
